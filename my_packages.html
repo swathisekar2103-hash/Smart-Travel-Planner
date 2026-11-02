@@ -1,0 +1,393 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Packages | Smart Travel</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #243047;
+        }
+
+        nav {
+            background: #102b46;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav h2 {
+            font-size: 23px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+            font-size: 14px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .heading p {
+            color: #65738a;
+            line-height: 1.6;
+        }
+
+        .message {
+            background: #e3f7e9;
+            color: #176534;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .create-box {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px #142b4610;
+            margin-bottom: 30px;
+        }
+
+        .create-box h2 {
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d5dce6;
+            border-radius: 7px;
+            outline: none;
+            background: white;
+        }
+
+        input:focus, select:focus {
+            border-color: #168b82;
+        }
+
+        button, .view-btn {
+            display: inline-block;
+            border: none;
+            border-radius: 7px;
+            padding: 12px 18px;
+            background: #13877e;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .create-btn {
+            margin-top: 18px;
+        }
+
+        .package-heading {
+            margin-bottom: 18px;
+        }
+
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .package-card {
+            background: white;
+            padding: 24px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px #142b4610;
+            border: 1px solid #e8edf3;
+        }
+
+        .package-card h3 {
+            font-size: 21px;
+            margin-bottom: 7px;
+            overflow-wrap: anywhere;
+        }
+
+        .destination {
+            color: #13877e;
+            font-weight: bold;
+            margin-bottom: 17px;
+        }
+
+        .details {
+            color: #647187;
+            font-size: 14px;
+            line-height: 1.9;
+            margin-bottom: 18px;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .delete-btn {
+            background: #fff0f0;
+            color: #c0392b;
+        }
+
+        .empty {
+            background: white;
+            padding: 35px 20px;
+            text-align: center;
+            border-radius: 14px;
+            color: #65738a;
+            line-height: 1.8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #788499;
+            font-size: 13px;
+        }
+
+        @media (max-width: 650px) {
+            nav {
+                padding: 16px 5%;
+            }
+
+            nav a {
+                margin-left: 0;
+                margin-right: 12px;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .form-grid, .package-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .heading h1 {
+                font-size: 27px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <h2>🌍 Smart Travel</h2>
+    <div>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('destinations') }}">Destinations</a>
+        <a href="{{ url_for('plan_trip') }}">Plan Trip</a>
+        <a href="{{ url_for('my_packages') }}">My Packages</a>
+    </div>
+</nav>
+
+<main class="container">
+
+    <section class="heading">
+        <h1>My Travel Packages ✈️</h1>
+        <p>Create your travel packages and keep all your favourite places together.</p>
+    </section>
+
+    {% if message %}
+        <div class="message">{{ message }}</div>
+    {% endif %}
+
+    <section class="create-box">
+        <h2>＋ Create a New Package</h2>
+
+        <form action="{{ url_for('create_package') }}" method="POST">
+            <div class="form-grid">
+
+                <div>
+                    <label for="destination">Destination *</label>
+                    <input
+                        type="text"
+                        id="destination"
+                        name="destination"
+                        placeholder="Example: Goa"
+                        required
+                    >
+                </div>
+
+                <div>
+                    <label for="package_name">Package Name</label>
+                    <input
+                        type="text"
+                        id="package_name"
+                        name="package_name"
+                        placeholder="Example: Goa Holiday"
+                    >
+                </div>
+
+                <div>
+                    <label for="travel_date">Travel Date</label>
+                    <input type="date" id="travel_date" name="travel_date">
+                </div>
+
+                <div>
+                    <label for="days">Number of Days</label>
+                    <input
+                        type="number"
+                        id="days"
+                        name="days"
+                        min="1"
+                        value="1"
+                    >
+                </div>
+
+                <div>
+                    <label for="travel_type">Travel Type</label>
+                    <select id="travel_type" name="travel_type">
+                        <option value="">Select travel type</option>
+                        <option value="Solo">Solo</option>
+                        <option value="Friends">Friends</option>
+                        <option value="Family">Family</option>
+                        <option value="Couple">Couple</option>
+                        <option value="Group">Group</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="budget">Budget (₹)</label>
+                    <input
+                        type="number"
+                        id="budget"
+                        name="budget"
+                        min="0"
+                        step="0.01"
+                        value="0"
+                    >
+                </div>
+
+            </div>
+
+            <button class="create-btn" type="submit">
+                Create Package
+            </button>
+        </form>
+    </section>
+
+    <h2 class="package-heading">Your Saved Packages</h2>
+
+    {% if packages %}
+        <section class="package-grid">
+
+            {% for package in packages %}
+                <article class="package-card">
+
+                    <h3>{{ package['package_name'] }}</h3>
+
+                    <p class="destination">
+                        📍 {{ package['destination'] }}
+                    </p>
+
+                    <div class="details">
+                        <div>
+                            📅 Travel Date:
+                            {{ package['travel_date'] or 'Not selected' }}
+                        </div>
+
+                        <div>
+                            🗓️ Days:
+                            {{ package['days'] }}
+                        </div>
+
+                        <div>
+                            👥 Travel Type:
+                            {{ package['travel_type'] or 'Not selected' }}
+                        </div>
+
+                        <div>
+                            💰 Budget:
+                            ₹{{ "%.2f"|format(package['budget'] or 0) }}
+                        </div>
+
+                        <div>
+                            📌 Saved Places:
+                            {{ package['place_count'] }}
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <a
+                            class="view-btn"
+                            href="{{ url_for('package_details', package_id=package['id']) }}"
+                        >
+                            View Package
+                        </a>
+
+                        <form
+                            action="{{ url_for('delete_package', package_id=package['id']) }}"
+                            method="POST"
+                            onsubmit="return confirm('Delete this package and all its saved places?');"
+                        >
+                            <button class="delete-btn" type="submit">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+
+                </article>
+            {% endfor %}
+
+        </section>
+    {% else %}
+        <section class="empty">
+            <h3>No packages saved yet 🧳</h3>
+            <p>Create a package above, or find a place through Plan Trip and add it to your packages.</p>
+        </section>
+    {% endif %}
+
+</main>
+
+<footer>
+    © 2026 Smart Travel Planner | Plan your journey your way ❤️
+</footer>
+
+</body>
+</html>

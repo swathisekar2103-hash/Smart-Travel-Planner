@@ -1,0 +1,444 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destinations | Smart Travel</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f8fc;
+            color: #222;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            min-height: 76px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 4%;
+            gap: 20px;
+            box-shadow: 0 2px 10px #00000012;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1677ff;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 17px;
+        }
+
+        .nav-links a:hover {
+            color: #1677ff;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 75px 20px 35px;
+        }
+
+        .hero h1 {
+            font-size: clamp(30px, 4vw, 48px);
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #1677ff;
+        }
+
+        .hero p {
+            color: #667085;
+            font-size: 18px;
+            margin-bottom: 35px;
+        }
+
+        .search-box {
+            width: 90%;
+            max-width: 780px;
+            margin: auto;
+            display: flex;
+            background: white;
+            border-radius: 14px;
+            padding: 9px;
+            box-shadow: 0 5px 25px #00000012;
+        }
+
+        .search-box input {
+            flex: 1;
+            min-width: 0;
+            border: none;
+            outline: none;
+            padding: 16px;
+            font-size: 17px;
+            background: transparent;
+        }
+
+        .search-box button {
+            border: none;
+            background: #1677ff;
+            color: white;
+            padding: 0 26px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .search-box button:hover {
+            background: #075ed0;
+        }
+
+        .search-box button:disabled {
+            opacity: 0.65;
+            cursor: wait;
+        }
+
+        .section {
+            width: 90%;
+            max-width: 1250px;
+            margin: 45px auto 70px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #667085;
+            font-size: 17px;
+        }
+
+        .destination-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px #00000010;
+            transition: transform 0.25s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-content {
+            padding: 24px;
+        }
+
+        .card-content h3 {
+            font-size: 21px;
+            margin-bottom: 12px;
+            overflow-wrap: anywhere;
+        }
+
+        .card-content p {
+            color: #667085;
+            line-height: 1.7;
+            overflow-wrap: anywhere;
+        }
+
+        .coordinates {
+            margin-top: 8px;
+            font-size: 13px;
+        }
+
+        .plan-btn {
+            display: inline-block;
+            margin-top: 18px;
+            background: #1677ff;
+            color: white;
+            text-decoration: none;
+            padding: 11px 17px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .plan-btn:hover {
+            background: #075ed0;
+        }
+
+        #searchMessage {
+            text-align: center;
+            margin: 25px auto;
+            color: #667085;
+            line-height: 1.6;
+            padding: 10px;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 25px 15px;
+            margin-top: auto;
+        }
+
+        @media (max-width: 760px) {
+            .navbar {
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .nav-links {
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .nav-links a {
+                font-size: 14px;
+            }
+
+            .hero {
+                padding-top: 45px;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .search-box input {
+                padding: 12px 8px;
+                font-size: 15px;
+            }
+
+            .search-box button {
+                padding: 0 14px;
+                font-size: 14px;
+            }
+
+            .section-title h2 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">🌍 Smart Travel</div>
+
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('destinations') }}">Destinations</a></li>
+            <li><a href="{{ url_for('plan_trip') }}">Plan Trip</a></li>
+           <li><a href="{{ url_for('my_packages') }}">My Packages</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- HERO -->
+        <section class="hero">
+            <h1>
+                Explore <span>Beautiful Destinations</span>
+            </h1>
+
+            <p>
+                Discover amazing places and plan your perfect journey.
+            </p>
+
+            <form class="search-box" id="searchForm">
+                <input
+                    type="text"
+                    id="destinationSearch"
+                    placeholder="Search any city, state or country..."
+                    aria-label="Search destination"
+                    autocomplete="off"
+                    required
+                >
+
+                <button type="submit" id="searchButton">
+                    🔍 Search
+                </button>
+            </form>
+        </section>
+
+        <!-- RESULTS -->
+        <section class="section">
+            <div class="section-title">
+                <h2 id="resultsTitle">Popular Destinations</h2>
+                <p id="resultsSubtitle">
+                    Search for any destination around the world.
+                </p>
+            </div>
+
+            <div
+                class="destination-grid"
+                id="destinationGrid"
+            ></div>
+
+            <p id="searchMessage" role="status" aria-live="polite">
+                Enter a place name to begin searching.
+            </p>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>
+            © 2026 Smart Travel Planner | Explore • Plan • Travel
+        </p>
+    </footer>
+
+    <script>
+        const searchForm = document.getElementById("searchForm");
+        const searchInput = document.getElementById("destinationSearch");
+        const searchButton = document.getElementById("searchButton");
+        const destinationGrid = document.getElementById("destinationGrid");
+        const searchMessage = document.getElementById("searchMessage");
+        const resultsTitle = document.getElementById("resultsTitle");
+        const resultsSubtitle = document.getElementById("resultsSubtitle");
+
+        // Search destinations using the Flask backend
+        searchForm.addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const place = searchInput.value.trim();
+
+            if (!place) {
+                searchMessage.textContent = "Please enter a destination.";
+                return;
+            }
+
+            searchButton.disabled = true;
+            searchButton.textContent = "Searching...";
+            destinationGrid.replaceChildren();
+            resultsTitle.textContent = "Search Results";
+            resultsSubtitle.textContent = "Finding matching locations...";
+            searchMessage.textContent = "Please wait...";
+
+            try {
+                const response = await fetch(
+                    "/search-destination?q=" + encodeURIComponent(place)
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.error || "Unable to search this destination."
+                    );
+                }
+
+                const results = data.results || [];
+
+                if (results.length === 0) {
+                    searchMessage.textContent =
+                        "No destination found. Check the spelling or try another place.";
+                    resultsSubtitle.textContent =
+                        "Try another city, state or country.";
+                    return;
+                }
+
+                resultsTitle.textContent = "Places Found";
+                resultsSubtitle.textContent =
+                    "Search results for " + place;
+
+                results.forEach(function(item) {
+                    const card = document.createElement("article");
+                    card.className = "card destination-card";
+
+                    const content = document.createElement("div");
+                    content.className = "card-content";
+
+                    const title = document.createElement("h3");
+                    title.textContent = "📍 " + (
+                        item.name || item.address || place
+                    );
+
+                    const address = document.createElement("p");
+                    address.textContent =
+                        item.address || "Address not available.";
+
+                    content.appendChild(title);
+                    content.appendChild(address);
+
+                    if (
+                        Number.isFinite(Number(item.lat)) &&
+                        Number.isFinite(Number(item.lon))
+                    ) {
+                        const coordinates = document.createElement("p");
+                        coordinates.className = "coordinates";
+                        coordinates.textContent =
+                            "Latitude: " + item.lat +
+                            " | Longitude: " + item.lon;
+
+                        const mapLink = document.createElement("a");
+                        mapLink.className = "plan-btn";
+                        mapLink.textContent = "View on Map →";
+                        mapLink.href =
+                            "https://www.google.com/maps/search/?api=1&query=" +
+                            encodeURIComponent(item.lat + "," + item.lon);
+                        mapLink.target = "_blank";
+                        mapLink.rel = "noopener noreferrer";
+
+                        content.appendChild(coordinates);
+                        content.appendChild(mapLink);
+                    }
+
+                    card.appendChild(content);
+                    destinationGrid.appendChild(card);
+                });
+
+                searchMessage.textContent =
+                    results.length + " matching location(s) found.";
+
+            } catch (error) {
+                searchMessage.textContent =
+                    error.message ||
+                    "Something went wrong. Please try again.";
+
+                resultsSubtitle.textContent =
+                    "Please check your connection and try again.";
+
+            } finally {
+                searchButton.disabled = false;
+                searchButton.textContent = "🔍 Search";
+            }
+        });
+    </script>
+
+</body>
+</html>

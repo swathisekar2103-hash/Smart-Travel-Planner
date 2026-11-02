@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Plan Your Trip | Smart Travel</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f8fc;
+            color: #222;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            width: 100%;
+            height: 75px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #087f8c;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: #087f8c;
+        }
+
+
+        /* ================= PAGE HEADER ================= */
+
+        .page-header {
+            text-align: center;
+            padding: 45px 20px 30px;
+        }
+
+        .page-header h1 {
+            font-size: 38px;
+            color: #12343b;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .main-container {
+            width: 88%;
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+
+        /* ================= FORM CARD ================= */
+
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            height: fit-content;
+        }
+
+        .form-card h2 {
+            color: #12343b;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d5dce2;
+            border-radius: 10px;
+            outline: none;
+            font-size: 14px;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #087f8c;
+            box-shadow: 0 0 0 2px rgba(8,127,140,0.1);
+        }
+
+
+        /* ================= INTERESTS ================= */
+
+        .interest-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .interest-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px;
+        }
+
+        .interest-item {
+            border: 1px solid #dce3e7;
+            border-radius: 9px;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            background: #fafcfd;
+        }
+
+        .interest-item:hover {
+            border-color: #087f8c;
+            background: #f0fbfc;
+        }
+
+        .interest-item input {
+            width: auto;
+            margin-right: 6px;
+        }
+
+
+        /* ================= BUTTON ================= */
+
+        .plan-btn {
+            width: 100%;
+            margin-top: 22px;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: #087f8c;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .plan-btn:hover {
+            background: #056a75;
+        }
+
+
+        /* ================= RESULT CARD ================= */
+
+        .result-card {
+            background: white;
+            min-height: 600px;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
+
+        .result-card h2 {
+            color: #12343b;
+            margin-bottom: 20px;
+        }
+
+
+        /* ================= EMPTY ================= */
+
+        .empty-result {
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #777;
+        }
+
+        .empty-result div {
+            max-width: 400px;
+        }
+
+        .empty-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+
+        /* ================= ERROR ================= */
+
+        .error-box {
+            background: #fff0f0;
+            color: #c62828;
+            border: 1px solid #ffcaca;
+            padding: 13px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+
+        /* ================= DESTINATION ================= */
+
+        .destination-title {
+            font-size: 32px;
+            color: #087f8c;
+            margin-bottom: 8px;
+        }
+
+        .location-text {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+
+
+        /* ================= LOCATION DETAILS ================= */
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .detail-box {
+            background: #f5fafb;
+            padding: 17px;
+            border-radius: 12px;
+        }
+
+        .detail-box span {
+            display: block;
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 5px;
+        }
+
+        .detail-box strong {
+            color: #333;
+            font-size: 14px;
+        }
+
+
+        /* ================= TRIP SUMMARY ================= */
+
+        .summary-box {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8fbfc;
+            border-radius: 14px;
+            border-left: 4px solid #087f8c;
+        }
+
+        .summary-box h3 {
+            margin-bottom: 15px;
+            color: #12343b;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e8eeee;
+            font-size: 14px;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .summary-row span:first-child {
+            color: #777;
+        }
+
+        .summary-row span:last-child {
+            font-weight: bold;
+            color: #333;
+            text-align: right;
+        }
+
+
+        /* ================= RECOMMENDATIONS ================= */
+
+        .recommendations {
+            margin-top: 35px;
+        }
+
+        .recommendations-title {
+            font-size: 26px;
+            color: #12343b;
+            margin-bottom: 25px;
+        }
+
+        .interest-section {
+            margin-bottom: 35px;
+        }
+
+        .interest-heading {
+            font-size: 21px;
+            color: #087f8c;
+            margin-bottom: 15px;
+        }
+
+        .place-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+
+        /* Keep place cards clean: View Details only */
+.place-grid > .save-place-btn,
+.place-grid > button {
+    display: none !important;
+}
+
+/* ================= PLACE LINK ================= */
+
+        .place-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .place-link:hover {
+            text-decoration: none;
+        }
+
+
+        /* ================= PLACE CARD ================= */
+
+        .place-card {
+            background: white;
+            border: 1px solid #e1e8eb;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: 0.25s ease;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .place-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            border-color: #087f8c;
+        }
+
+        .place-image {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            display: block;
+            background: #eaf5f6;
+        }
+
+        .place-image-fallback {
+            width: 100%;
+            height: 190px;
+            background: linear-gradient(
+                135deg,
+                #dff7f7,
+                #f5fbfb
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 55px;
+        }
+
+        .place-content {
+            padding: 18px;
+        }
+
+        .place-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #12343b;
+            margin-bottom: 8px;
+        }
+
+        .place-address {
+            font-size: 13px;
+            color: #777;
+            line-height: 1.5;
+        }
+
+        .view-details {
+            display: inline-block;
+            margin-top: 12px;
+            color: #087f8c;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+
+        /* ================= NO PLACES ================= */
+
+        .no-places {
+            background: #f8fbfc;
+            border: 1px dashed #cbdcdf;
+            border-radius: 12px;
+            padding: 20px;
+            color: #777;
+            font-size: 14px;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 900px) {
+
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+        }
+
+
+        @media(max-width: 600px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 30px;
+            }
+
+            .main-container {
+                width: 94%;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .place-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .result-card {
+                padding: 22px;
+            }
+
+            .form-card {
+                padding: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🌍 Smart Travel
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="{{ url_for('my_packages') }}">My Packages</a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ================= PAGE HEADER ================= -->
+
+    <section class="page-header">
+
+        <h1>
+            Plan Your Perfect Trip ✈️
+        </h1>
+
+        <p>
+            Enter your travel details and create your personalized trip.
+        </p>
+
+    </section>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <div class="main-container">
+
+
+        <!-- ================================================= -->
+        <!-- LEFT SIDE - FORM -->
+        <!-- ================================================= -->
+
+        <div class="form-card">
+
+            <h2>
+                🌍 Trip Details
+            </h2>
+
+
+            <form
+                action="/plan-trip"
+                method="POST"
+            >
+
+
+                <!-- DESTINATION -->
+
+                <div class="form-group">
+
+                    <label for="destination">
+                        📍 Destination
+                    </label>
+
+                    <input
+                        type="text"
+                        id="destination"
+                        name="destination"
+                        placeholder="Enter destination"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- TRAVEL DATE -->
+
+                <div class="form-group">
+
+                    <label for="travel_date">
+                        📅 Travel Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="travel_date"
+                        name="travel_date"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- NUMBER OF DAYS -->
+
+                <div class="form-group">
+
+                    <label for="days">
+                        🗓️ Number of Days
+                    </label>
+
+                    <input
+                        type="number"
+                        id="days"
+                        name="days"
+                        placeholder="Example: 5"
+                        min="1"
+                        max="100"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- TRAVEL TYPE -->
+
+                <div class="form-group">
+
+                    <label for="travel_type">
+                        👥 Travel Type
+                    </label>
+
+                    <select
+                        id="travel_type"
+                        name="travel_type"
+                        required
+                    >
+
+                        <option value="">
+                            Select Travel Type
+                        </option>
+
+                        <option value="solo">
+                            🧍 Solo
+                        </option>
+
+                        <option value="friends">
+                            👫 Friends
+                        </option>
+
+                        <option value="family">
+                            👨‍👩‍👧‍👦 Family
+                        </option>
+
+                        <option value="couple">
+                            💕 Couple
+                        </option>
+
+                        <option value="group">
+                            👥 Group
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- BUDGET -->
+
+                <div class="form-group">
+
+                    <label for="budget">
+                        💰 Budget
+                    </label>
+
+                    <input
+                        type="number"
+                        id="budget"
+                        name="budget"
+                        placeholder="Enter your budget (₹)"
+                        min="0"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- INTERESTS -->
+
+                <div class="form-group">
+
+                    <div class="interest-title">
+                        ❤️ What are you interested in?
+                    </div>
+
+
+                    <div class="interest-grid">
+
+
+                        <label class="interest-item">
+
+                            <input
+                                type="checkbox"
+                                name="interests"
+                                value="nature"
+                            >
+
+                            🌿 Nature
+
+                        </label>
+
+
+
+                        <label class="interest-item">
+
+                            <input
+                                type="checkbox"
+                                name="interests"
+                                value="food"
+                            >
+
+                            🍴 Food
+
+                        </label>
+
+
+
+                        <label class="interest-item">
+
+                            <input
+                                type="checkbox"
+                                name="interests"
+                                value="historical"
+                            >
+
+                            🏛️ Historical
+
+                        </label>
+
+
+
+                        <label class="interest-item">
+
+                            <input
+                                type="checkbox"
+                                name="interests"
+                                value="beach"
+                            >
+
+                            🏖️ Beach
+
+                        </label>
+
+
+
+                        <label class="interest-item">
+
+                            <input
+                                type="checkbox"
+                                name="interests"
+                                value="shopping"
+                            >
+
+                            🛍️ Shopping
+
+                        </label>
+
+
+
+                        <label class="interest-item">
+
+                            <input
+                                type="checkbox"
+                                name="interests"
+                                value="entertainment"
+                            >
+
+                            🎡 Entertainment
+
+                        </label>
+
+
+
+                        <label class="interest-item">
+
+                            <input
+                                type="checkbox"
+                                name="interests"
+                                value="adventure"
+                            >
+
+                            🧗 Adventure
+
+                        </label>
+
+
+
+                        <label class="interest-item">
+
+                            <input
+                                type="checkbox"
+                                name="interests"
+                                value="photography"
+                            >
+
+                            📸 Photography
+
+                        </label>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- BUTTON -->
+
+                <button
+                    type="submit"
+                    class="plan-btn"
+                >
+
+                    ✈️ Plan My Trip
+
+                </button>
+
+
+            </form>
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- RIGHT SIDE - RESULT -->
+        <!-- ================================================= -->
+
+        <div class="result-card">
+
+
+            <!-- ERROR -->
+
+            {% if error %}
+
+                <div class="error-box">
+
+                    ⚠️ {{ error }}
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- ================================================= -->
+            <!-- DESTINATION RESULT -->
+            <!-- ================================================= -->
+
+            {% if destination %}
+
+
+                <h2>
+                    Your Trip Destination
+                </h2>
+
+
+                <div class="destination-title">
+
+                    📍 {{ destination.name }}
+
+                </div>
+
+
+                <div class="location-text">
+
+                    {{ destination.formatted }}
+
+                </div>
+
+
+
+                <!-- LOCATION DETAILS -->
+
+                <div class="details-grid">
+
+
+                    <div class="detail-box">
+
+                        <span>
+                            🏙️ City
+                        </span>
+
+                        <strong>
+                            {{ destination.city or "Not available" }}
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="detail-box">
+
+                        <span>
+                            📍 State
+                        </span>
+
+                        <strong>
+                            {{ destination.state or "Not available" }}
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="detail-box">
+
+                        <span>
+                            🌍 Country
+                        </span>
+
+                        <strong>
+                            {{ destination.country or "Not available" }}
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="detail-box">
+
+                        <span>
+                            🧭 Coordinates
+                        </span>
+
+                        <strong>
+
+                            {{ destination.latitude }},
+                            {{ destination.longitude }}
+
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ================================================= -->
+                <!-- TRIP SUMMARY -->
+                <!-- ================================================= -->
+
+                <div class="summary-box">
+
+
+                    <h3>
+                        ✨ Your Trip Summary
+                    </h3>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            📍 Destination
+                        </span>
+
+                        <span>
+                            {{ destination.name }}
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            📅 Travel Date
+                        </span>
+
+                        <span>
+                            {{ request.form.get('travel_date', 'Not selected') }}
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            🗓️ Number of Days
+                        </span>
+
+                        <span>
+                            {{ request.form.get('days', 'Not selected') }}
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            👥 Travel Type
+                        </span>
+
+                        <span>
+                            {{ request.form.get('travel_type', 'Not selected')|capitalize }}
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            💰 Budget
+                        </span>
+
+                        <span>
+                            ₹{{ request.form.get('budget', '0') }}
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            ❤️ Interests
+                        </span>
+
+                        <span>
+
+                            {% if request.form.getlist('interests') %}
+
+                                {{ request.form.getlist('interests')|join(', ')|capitalize }}
+
+                            {% else %}
+
+                                Not selected
+
+                            {% endif %}
+
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ================================================= -->
+                <!-- RECOMMENDED PLACES -->
+                <!-- ================================================= -->
+
+                {% if recommendations %}
+
+                    <div class="recommendations">
+
+                        <div class="recommendations-title">
+
+                            📍 Recommended Places
+
+                        </div>
+
+
+                        {% for section in recommendations %}
+
+                            <div class="interest-section">
+
+
+                                <div class="interest-heading">
+
+                                    {{ section.title }}
+
+                                </div>
+
+
+
+                                {% if section.places %}
+
+                                    <div class="place-grid">
+
+
+                                        {% for place in section.places %}
+
+
+                                            <!-- CLICKABLE PLACE CARD -->
+
+                                            {% if place.place_id %}
+
+                                                <a
+                                                    href="{{ url_for(
+                                                        'place_details',
+                                                        place_id=place.place_id,
+                                                        destination=destination.name,
+                                                        image=place.image,
+                                                        image_source=place.image_source
+                                                    ) }}"
+                                                    class="place-link"
+                                                >
+
+                                                    <div class="place-card">
+
+
+                                                        <!-- IMAGE -->
+
+                                                        {% if place.image %}
+
+                                                            <img
+                                                                src="{{ place.image }}"
+                                                                alt="{{ place.name }}"
+                                                                class="place-image"
+                                                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                                            >
+
+                                                            <div
+                                                                class="place-image-fallback"
+                                                                style="display:none;"
+                                                            >
+                                                                📍
+                                                            </div>
+
+                                                        {% else %}
+
+                                                            <div class="place-image-fallback">
+                                                                📍
+                                                            </div>
+
+                                                        {% endif %}
+
+
+
+                                                        <!-- CONTENT -->
+
+                                                        <div class="place-content">
+
+
+                                                            <div class="place-name">
+
+                                                                {{ place.name }}
+
+                                                            </div>
+
+
+                                                            <div class="place-address">
+
+                                                                {{ place.address or "Address not available" }}
+
+                                                            </div>
+
+
+                                                            <div class="view-details">
+
+                                                                View Details →
+                                                                
+                                                            </div>
+
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </a>
+
+
+                                            {% else %}
+
+
+                                                <!-- CARD WITHOUT PLACE ID -->
+
+                                                <div class="place-card">
+
+
+                                                    {% if place.image %}
+
+                                                        <img
+                                                            src="{{ place.image }}"
+                                                            alt="{{ place.name }}"
+                                                            class="place-image"
+                                                        >
+
+                                                    {% else %}
+
+                                                        <div class="place-image-fallback">
+                                                            📍
+                                                        </div>
+
+                                                    {% endif %}
+
+
+                                                    <div class="place-content">
+
+                                                        <div class="place-name">
+
+                                                            {{ place.name }}
+
+                                                        </div>
+
+
+                                                        <div class="place-address">
+
+                                                            {{ place.address or "Address not available" }}
+
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </div>
+
+
+                                            {% endif %}
+
+
+                                        {% endfor %}
+
+
+                                    </div>
+
+
+                                {% else %}
+
+
+                                    <div class="no-places">
+
+                                        No places found for this interest near
+                                        {{ destination.name }}.
+
+                                    </div>
+
+
+                                {% endif %}
+
+
+                            </div>
+
+
+                        {% endfor %}
+
+
+                    </div>
+
+                {% endif %}
+
+
+
+            {% else %}
+
+
+                <!-- ================================================= -->
+                <!-- BEFORE SEARCH -->
+                <!-- ================================================= -->
+
+                <div class="empty-result">
+
+
+                    <div>
+
+
+                        <div class="empty-icon">
+                            ✈️
+                        </div>
+
+
+                        <h2>
+                            Your trip starts here!
+                        </h2>
+
+
+                        <p>
+
+                            Enter your destination and travel details
+                            on the left side.
+
+                            Your destination information and recommended
+                            places will appear here.
+
+                        </p>
+
+
+                    </div>
+
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation | Smart Travel</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #17243a;
+        }
+
+        nav {
+            background: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px #00000010;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        nav strong {
+            color: #07869a;
+            font-size: 23px;
+        }
+
+        nav a {
+            color: #17243a;
+            text-decoration: none;
+            margin-left: 22px;
+        }
+
+        nav a:hover {
+            color: #087f91;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 45px auto;
+            padding: 0 18px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 8px 28px #17243a12;
+        }
+
+        .success {
+            font-size: 42px;
+        }
+
+        h1 {
+            color: #087f68;
+            margin: 8px 0;
+        }
+
+        .muted {
+            color: #69788d;
+        }
+
+        .details {
+            margin-top: 25px;
+            border-top: 1px solid #e5eaf0;
+        }
+
+        .line {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 13px 0;
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .line span:first-child {
+            color: #69788d;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: 700;
+            color: #087f91;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 13px 20px;
+            border-radius: 8px;
+            background: #087f91;
+            color: white;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .feedback-btn {
+            background: #087f68;
+            margin-left: 10px;
+        }
+
+        .btn:hover {
+            opacity: 0.88;
+        }
+
+        @media (max-width: 500px) {
+            .line {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .feedback-btn {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <strong>🌍 Smart Travel</strong>
+
+    <div>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('my_packages') }}">My Packages</a>
+        <a href="{{ url_for('feedback') }}">Feedback</a>
+    </div>
+</nav>
+
+<main class="container">
+
+    <section class="card">
+
+        <div class="success">✓</div>
+
+        <h1>Booking Saved Successfully!</h1>
+
+        <p class="muted">
+            Your booking details have been stored.
+            No payment has been processed.
+        </p>
+
+        <div class="details">
+
+            <div class="line">
+                <span>Booking ID</span>
+                <strong>#{{ booking['id'] }}</strong>
+            </div>
+
+            <div class="line">
+                <span>Package</span>
+                <strong>{{ booking['package_name'] }}</strong>
+            </div>
+
+            <div class="line">
+                <span>Destination</span>
+                <strong>{{ booking['destination'] }}</strong>
+            </div>
+
+            <div class="line">
+                <span>Traveller Name</span>
+                <strong>{{ booking['traveller_name'] }}</strong>
+            </div>
+
+            <div class="line">
+                <span>Email</span>
+                <strong>{{ booking['email'] }}</strong>
+            </div>
+
+            <div class="line">
+                <span>Phone</span>
+                <strong>{{ booking['phone'] }}</strong>
+            </div>
+
+            <div class="line">
+                <span>Number of Travellers</span>
+                <strong>{{ booking['travellers'] }}</strong>
+            </div>
+
+            <div class="line">
+                <span>Price per Person</span>
+                <strong>₹{{ "%.2f"|format(booking['price_per_person']) }}</strong>
+            </div>
+
+            <div class="line total">
+                <span>Total Amount</span>
+                <strong>₹{{ "%.2f"|format(booking['total_amount']) }}</strong>
+            </div>
+
+            <div class="line">
+                <span>Booked At</span>
+                <strong>{{ booking['booked_at'] }}</strong>
+            </div>
+
+        </div>
+
+        <a class="btn"
+           href="{{ url_for('my_packages') }}">
+            Go to My Packages
+        </a>
+
+        <a class="btn feedback-btn"
+           href="{{ url_for('feedback') }}">
+            ⭐ Give Feedback
+        </a>
+
+    </section>
+
+</main>
+
+</body>
+</html>

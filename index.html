@@ -1,0 +1,517 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Travel Planner</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo-area">
+        <div class="logo-icon">🌍</div>
+
+        <div class="logo-text">
+            <h2>Smart Travel</h2>
+            <p>PLAN • EXPLORE • LIVE</p>
+        </div>
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('home') }}" class="active">
+            Home
+        </a>
+
+        <a href="{{ url_for('destinations') }}">
+            Destinations
+        </a>
+
+        <a href="{{ url_for('plan_trip') }}">
+            Plan Trip
+        </a>
+
+        <a href="{{ url_for('my_packages') }}">
+            My Packages
+        </a>
+
+        <a href="{{ url_for('about') }}">
+            About
+        </a>
+
+        <a href="{{ url_for('feedback') }}">
+            Feedback
+        </a>
+
+    </div>
+
+    <div class="nav-icons">
+        <span class="search-icon">⌕</span>
+        <span class="profile-icon">●</span>
+    </div>
+
+</nav>
+
+
+<!-- ================= HERO SECTION ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="small-heading">
+            ✈ EXPLORE • DISCOVER • EXPERIENCE
+        </p>
+
+        <h1>
+            Your Next<br>
+            <span>Adventure</span><br>
+            Starts Here
+        </h1>
+
+        <p class="hero-text">
+            Plan your perfect trip with Smart Travel.
+            Discover new places and create unforgettable memories.
+        </p>
+
+        <div class="features">
+
+            <div class="feature-item">
+                <b>◉</b>
+                <span>New Places</span>
+            </div>
+
+            <div class="feature-item">
+                <b>△</b>
+                <span>Real Experiences</span>
+            </div>
+
+            <div class="feature-item">
+                <b>♡</b>
+                <span>Lasting Memories</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TRIP SEARCH FORM -->
+
+    <form class="trip-box"
+          action="{{ url_for('plan_trip') }}"
+          method="POST">
+
+        <div class="input-box">
+
+            <span class="input-icon">📍</span>
+
+            <div class="input-content">
+
+                <label for="home-destination">
+                    Where do you want to go?
+                </label>
+
+                <input
+                    type="text"
+                    name="destination"
+                    id="home-destination"
+                    placeholder="Enter any city, state, or country..."
+                    required
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="input-box">
+
+            <span class="input-icon">📅</span>
+
+            <div class="input-content">
+
+                <label for="home-travel-date">
+                    Travel Date
+                </label>
+
+                <input
+                    type="date"
+                    name="travel_date"
+                    id="home-travel-date"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="input-box">
+
+            <span class="input-icon">🗓️</span>
+
+            <div class="input-content">
+
+                <label for="home-days">
+                    Number of Days
+                </label>
+
+                <input
+                    type="number"
+                    name="days"
+                    id="home-days"
+                    min="1"
+                    max="365"
+                    placeholder="Example: 3"
+                >
+
+            </div>
+
+        </div>
+
+
+        <button type="submit" class="plan-btn">
+            🔍 Plan Trip →
+        </button>
+
+    </form>
+
+</section>
+
+
+<!-- ================= POPULAR DESTINATIONS ================= -->
+
+<section class="destinations" id="destinations">
+
+    <div class="section-heading">
+
+        <div>
+            <p class="section-small-title">
+                POPULAR DESTINATIONS
+            </p>
+
+            <h2>Explore Dream Destinations</h2>
+        </div>
+
+        <a href="{{ url_for('destinations') }}"
+           class="view-all">
+            View All Destinations →
+        </a>
+
+    </div>
+
+
+    <div class="destination-grid">
+
+
+        <!-- KUMBAKONAM -->
+
+        <div class="destination-card">
+
+            <div class="card-image">
+
+                <img
+                    src="{{ url_for('static', filename='image/kumbakonam.jpg') }}"
+                    alt="Kumbakonam"
+                >
+
+                <button type="button"
+                        class="heart"
+                        aria-label="Add Kumbakonam to favourites">
+                    ♡
+                </button>
+
+                <div class="place-name">
+                    📍 Kumbakonam
+                </div>
+
+            </div>
+
+            <div class="card-content">
+
+                <p>
+                    Temples, tradition and timeless beauty.
+                </p>
+
+                <button type="button"
+                        class="arrow"
+                        aria-label="Explore Kumbakonam">
+                    →
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- KODAIKANAL -->
+
+        <div class="destination-card">
+
+            <div class="card-image">
+
+                <img
+                    src="{{ url_for('static', filename='image/kodaikanal.jpg') }}"
+                    alt="Kodaikanal"
+                >
+
+                <button type="button"
+                        class="heart"
+                        aria-label="Add Kodaikanal to favourites">
+                    ♡
+                </button>
+
+                <div class="place-name">
+                    📍 Kodaikanal
+                </div>
+
+            </div>
+
+            <div class="card-content">
+
+                <p>
+                    Cool breezes, green hills, peaceful vibes.
+                </p>
+
+                <button type="button"
+                        class="arrow"
+                        aria-label="Explore Kodaikanal">
+                    →
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- RAMESWARAM -->
+
+        <div class="destination-card">
+
+            <div class="card-image">
+
+                <img
+                    src="{{ url_for('static', filename='image/rameswaram.jpg') }}"
+                    alt="Rameswaram"
+                >
+
+                <button type="button"
+                        class="heart"
+                        aria-label="Add Rameswaram to favourites">
+                    ♡
+                </button>
+
+                <div class="place-name">
+                    📍 Rameswaram
+                </div>
+
+            </div>
+
+            <div class="card-content">
+
+                <p>
+                    Where spirituality meets the sea.
+                </p>
+
+                <button type="button"
+                        class="arrow"
+                        aria-label="Explore Rameswaram">
+                    →
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- OOTY -->
+
+        <div class="destination-card">
+
+            <div class="card-image">
+
+                <img
+                    src="{{ url_for('static', filename='image/ooty.jpg') }}"
+                    alt="Ooty"
+                >
+
+                <button type="button"
+                        class="heart"
+                        aria-label="Add Ooty to favourites">
+                    ♡
+                </button>
+
+                <div class="place-name">
+                    📍 Ooty
+                </div>
+
+            </div>
+
+            <div class="card-content">
+
+                <p>
+                    Fresh air, tea gardens, happy vibes.
+                </p>
+
+                <button type="button"
+                        class="arrow"
+                        aria-label="Explore Ooty">
+                    →
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- GOA -->
+
+        <div class="destination-card">
+
+            <div class="card-image">
+
+                <img
+                    src="{{ url_for('static', filename='image/goa.jpg') }}"
+                    alt="Goa"
+                >
+
+                <button type="button"
+                        class="heart"
+                        aria-label="Add Goa to favourites">
+                    ♡
+                </button>
+
+                <div class="place-name">
+                    📍 Goa
+                </div>
+
+            </div>
+
+            <div class="card-content">
+
+                <p>
+                    Sun, sand and endless fun.
+                </p>
+
+                <button type="button"
+                        class="arrow"
+                        aria-label="Explore Goa">
+                    →
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= WHY CHOOSE SMART TRAVEL ================= -->
+
+<section class="why-section">
+
+    <div class="why-title">
+
+        <p>TRAVEL SMARTER</p>
+
+        <h2>Why Choose Smart Travel?</h2>
+
+    </div>
+
+
+    <div class="why-grid">
+
+
+        <div class="why-card">
+
+            <div class="why-icon">🌍</div>
+
+            <h3>Explore Anywhere</h3>
+
+            <p>
+                Discover beautiful destinations around the world.
+            </p>
+
+        </div>
+
+
+        <div class="why-card">
+
+            <div class="why-icon">🗺️</div>
+
+            <h3>Easy Planning</h3>
+
+            <p>
+                Create your perfect travel plan in just a few clicks.
+            </p>
+
+        </div>
+
+
+        <div class="why-card">
+
+            <div class="why-icon">✨</div>
+
+            <h3>Personal Experience</h3>
+
+            <p>
+                Get travel ideas based on your interests.
+            </p>
+
+        </div>
+
+
+        <div class="why-card">
+
+            <div class="why-icon">❤️</div>
+
+            <h3>Make Memories</h3>
+
+            <p>
+                Plan memorable journeys with friends and family.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-logo">
+        🌍 Smart Travel
+    </div>
+
+    <p>Plan • Explore • Live</p>
+
+    <p class="copyright">
+        © 2026 Smart Travel Planner. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script src="{{ url_for('static', filename='js/hero.js') }}"></script>
+
+</body>
+</html>

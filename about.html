@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Smart Travel</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f8fc;
+            color: #263445;
+        }
+
+        header {
+            background: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px #ddd;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            color: #087f8c;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin-left: 22px;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: #087f8c;
+        }
+
+        .hero {
+            background: linear-gradient(120deg, #087f8c, #36b8ad);
+            color: white;
+            text-align: center;
+            padding: 75px 20px;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .content {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px #0000000d;
+        }
+
+        .section h2 {
+            color: #087f8c;
+            margin-bottom: 15px;
+        }
+
+        .section p {
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .feature {
+            background: #eaf8f7;
+            padding: 25px;
+            text-align: center;
+            border-radius: 12px;
+        }
+
+        .feature h3 {
+            margin: 12px 0;
+            color: #087f8c;
+        }
+
+        footer {
+            background: #173b43;
+            color: white;
+            text-align: center;
+            padding: 22px;
+            margin-top: 40px;
+        }
+
+        @media(max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 7px;
+                font-size: 13px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🌍 Smart Travel</div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/destinations">Destinations</a>
+        <a href="/plan-trip">Plan Trip</a>
+        <a href="/my-packages">My Packages</a>
+        <a href="/feedback">Feedback</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>About Smart Travel 🌍</h1>
+    <p>Discover new destinations and plan your perfect journey.</p>
+</section>
+
+<div class="content">
+
+    <div class="section">
+        <h2>Who We Are</h2>
+        <p>
+            Smart Travel is a travel planning platform designed to
+            make travelling easier and more enjoyable. Users can
+            explore destinations, discover interesting places and
+            create their own travel packages in one place.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Our Mission</h2>
+        <p>
+            Our mission is to help travellers plan their trips easily
+            by providing destination information, personalized place
+            recommendations and convenient package management.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>What We Offer</h2>
+
+        <div class="features">
+            <div class="feature">
+                <div style="font-size:35px;">📍</div>
+                <h3>Explore Places</h3>
+                <p>Discover interesting places around your destination.</p>
+            </div>
+
+            <div class="feature">
+                <div style="font-size:35px;">✈️</div>
+                <h3>Plan Trips</h3>
+                <p>Create travel plans based on your interests.</p>
+            </div>
+
+            <div class="feature">
+                <div style="font-size:35px;">🎒</div>
+                <h3>My Packages</h3>
+                <p>Save and manage your favourite travel packages.</p>
+            </div>
+
+            <div class="feature">
+                <div style="font-size:35px;">⭐</div>
+                <h3>Share Feedback</h3>
+                <p>Share your experience and help us improve.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Why Choose Smart Travel?</h2>
+        <p>
+            Smart Travel brings destination discovery and trip
+            planning together in a simple platform. Our goal is
+            to make every journey easier to organize and enjoy.
+        </p>
+    </div>
+
+</div>
+
+<footer>
+    <p>© 2026 Smart Travel Planner. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

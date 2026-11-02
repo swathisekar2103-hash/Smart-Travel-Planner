@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package Details | Smart Travel</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #243047;
+        }
+
+        nav {
+            background: #102b46;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav h2 { font-size: 23px; }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+            font-size: 14px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        .back {
+            display: inline-block;
+            color: #13877e;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .package-header {
+            background: #102b46;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 28px;
+        }
+
+        .package-header h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+            overflow-wrap: anywhere;
+        }
+
+        .package-header p {
+            color: #d9e7f3;
+            line-height: 1.7;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .summary-item {
+            background: #ffffff18;
+            padding: 14px;
+            border-radius: 9px;
+            overflow-wrap: anywhere;
+        }
+
+        .summary-item small {
+            display: block;
+            color: #d9e7f3;
+            margin-bottom: 7px;
+        }
+
+        .summary-item strong { font-size: 16px; }
+
+        .booking-action {
+            margin-top: 22px;
+        }
+
+        .book-now-btn {
+            display: inline-block;
+            background: #18a999;
+            color: white;
+            text-decoration: none;
+            padding: 13px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            transition: background 0.2s ease;
+        }
+
+        .book-now-btn:hover { background: #117b73; }
+
+        .booking-note {
+            color: #d9e7f3;
+            font-size: 13px;
+            margin-top: 9px;
+        }
+
+        .section-heading { margin-bottom: 18px; }
+
+        .place-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .place-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px #142b4610;
+            border: 1px solid #e8edf3;
+        }
+
+        .place-image {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+            display: block;
+            background: #e7edf3;
+        }
+
+        .place-content { padding: 22px; }
+
+        .place-content h3 {
+            font-size: 21px;
+            margin-bottom: 10px;
+            overflow-wrap: anywhere;
+        }
+
+        .category {
+            display: inline-block;
+            background: #e1f5f0;
+            color: #11776e;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .address {
+            color: #65738a;
+            line-height: 1.6;
+            font-size: 14px;
+            margin-bottom: 17px;
+            overflow-wrap: anywhere;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .map-btn, .remove-btn {
+            display: inline-block;
+            padding: 11px 14px;
+            border-radius: 7px;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .map-btn {
+            background: #13877e;
+            color: white;
+        }
+
+        .remove-btn {
+            background: #fff0f0;
+            color: #c0392b;
+        }
+
+        .empty {
+            background: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 14px;
+            line-height: 1.8;
+            color: #65738a;
+        }
+
+        .empty a { color: #13877e; }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #788499;
+            font-size: 13px;
+        }
+
+        @media (max-width: 750px) {
+            .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .place-grid { grid-template-columns: 1fr; }
+            .package-header h1 { font-size: 25px; }
+        }
+
+        @media (max-width: 500px) {
+            nav { padding: 16px 5%; }
+            nav a {
+                margin-left: 0;
+                margin-right: 12px;
+            }
+            .container { width: 92%; }
+            .package-header { padding: 22px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <h2>🌍 Smart Travel</h2>
+    <div>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('destinations') }}">Destinations</a>
+        <a href="{{ url_for('plan_trip') }}">Plan Trip</a>
+        <a href="{{ url_for('my_packages') }}">My Packages</a>
+    </div>
+</nav>
+
+<main class="container">
+
+    <a class="back" href="{{ url_for('my_packages') }}">
+        ← Back to My Packages
+    </a>
+
+    <section class="package-header">
+
+        <h1>🧳 {{ package['package_name'] }}</h1>
+
+        <p>
+            Your saved places for {{ package['destination'] }}.
+        </p>
+
+        <div class="summary">
+
+            <div class="summary-item">
+                <small>📍 Destination</small>
+                <strong>{{ package['destination'] }}</strong>
+            </div>
+
+            <div class="summary-item">
+                <small>📅 Travel Date</small>
+                <strong>{{ package['travel_date'] or 'Not selected' }}</strong>
+            </div>
+
+            <div class="summary-item">
+                <small>🗓️ Duration</small>
+                <strong>
+                    {{ package['days'] }}
+                    {% if package['days'] == 1 %}day{% else %}days{% endif %}
+                </strong>
+            </div>
+
+            <div class="summary-item">
+                <small>💰 Price per person</small>
+                <strong>₹{{ "%.2f"|format(package['budget'] or 0) }}</strong>
+            </div>
+
+        </div>
+
+        <div class="booking-action">
+            <a
+                class="book-now-btn"
+                href="{{ url_for('book_package', package_id=package['id']) }}"
+            >
+                Book Now →
+            </a>
+            <p class="booking-note">
+                Continue to enter traveller details and view the total amount.
+            </p>
+        </div>
+
+    </section>
+
+    <h2 class="section-heading">Your Saved Places 📌</h2>
+
+    {% if places %}
+        <section class="place-grid">
+
+            {% for place in places %}
+                <article class="place-card">
+
+                    {% if place['image'] %}
+                        <img
+                            class="place-image"
+                            src="{{ place['image'] }}"
+                            alt="{{ place['place_name'] }}"
+                            loading="lazy"
+                        >
+                    {% else %}
+                        <div class="place-image"></div>
+                    {% endif %}
+
+                    <div class="place-content">
+
+                        <h3>{{ place['place_name'] }}</h3>
+
+                        {% if place['category'] %}
+                            <span class="category">
+                                {{ place['category'] }}
+                            </span>
+                        {% endif %}
+
+                        <p class="address">
+                            📍 {{ place['address'] or 'Address not available' }}
+                        </p>
+
+                        <div class="actions">
+
+                            {% if place['latitude'] is not none
+                                  and place['longitude'] is not none %}
+                                <a
+                                    class="map-btn"
+                                    href="https://www.google.com/maps/search/?api=1&query={{ place['latitude'] }},{{ place['longitude'] }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Open in Google Maps
+                                </a>
+                            {% endif %}
+
+                            <form
+                                action="{{ url_for('remove_from_package', place_row_id=place['id']) }}"
+                                method="POST"
+                                onsubmit="return confirm('Remove this place from your package?');"
+                            >
+                                <button class="remove-btn" type="submit">
+                                    Remove Place
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </article>
+            {% endfor %}
+
+        </section>
+
+    {% else %}
+        <section class="empty">
+            <h3>No places added yet.</h3>
+            <p>Go to Plan Trip, select a place, view its details, and add it to this package.</p>
+            <p>
+                <a href="{{ url_for('plan_trip') }}">Start planning your trip →</a>
+            </p>
+        </section>
+    {% endif %}
+
+</main>
+
+<footer>
+    © 2026 Smart Travel Planner | Your journey, your memories ❤️
+</footer>
+
+</body>
+</html>

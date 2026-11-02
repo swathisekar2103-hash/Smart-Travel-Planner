@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ place.name if place else "Place Details" }} | Smart Travel</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f8fc;
+            color: #222;
+        }
+
+        .navbar {
+            height: 75px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 2px 10px rgba(0,0,0,.08);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #087f8c;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .nav-links a:hover {
+            color: #087f8c;
+        }
+
+        .container {
+            width: 88%;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: #087f8c;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .details-card {
+            background: white;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 6px 30px rgba(0,0,0,.10);
+        }
+
+        .main-image, .no-image {
+            width: 100%;
+            height: 430px;
+            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .no-image {
+            background: #e8f8f9;
+            font-size: 80px;
+        }
+
+        .content {
+            padding: 35px;
+        }
+
+        .category {
+            display: inline-block;
+            background: #e8f8f9;
+            color: #087f8c;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: #12343b;
+            font-size: 34px;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 25px;
+        }
+
+        .info-box {
+            background: #f5fafb;
+            padding: 20px;
+            border-radius: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .info-box span {
+            display: block;
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .info-box strong {
+            color: #12343b;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .coordinates {
+            margin-top: 20px;
+            padding: 18px;
+            background: #f8fbfc;
+            border-left: 4px solid #087f8c;
+            border-radius: 10px;
+            overflow-wrap: anywhere;
+        }
+
+        .coordinates strong {
+            color: #087f8c;
+        }
+
+        .map-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 13px 22px;
+            background: #087f8c;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .image-source {
+            display: inline-block;
+            margin-top: 20px;
+            color: #777;
+            font-size: 12px;
+            text-decoration: none;
+        }
+
+        /* ADD TO PACKAGE */
+
+        .package-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f1fbfa;
+            border: 1px solid #ccebe7;
+            border-radius: 16px;
+        }
+
+        .package-section h2 {
+            color: #12343b;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .package-section p {
+            color: #607174;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        .package-section label {
+            display: block;
+            font-weight: bold;
+            margin: 14px 0 7px;
+            color: #23474c;
+        }
+
+        .package-section input,
+        .package-section select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbdcde;
+            border-radius: 9px;
+            background: white;
+            font-size: 15px;
+        }
+
+        .package-section input:focus,
+        .package-section select:focus {
+            outline: 2px solid #a4dedd;
+            border-color: #087f8c;
+        }
+
+        .add-btn {
+            display: inline-block;
+            width: auto !important;
+            max-width: 100%;
+            padding: 10px 16px;
+            margin-top: 18px;
+            background: #087f8c;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            background: #056a75;
+        }
+
+        .packages-link {
+            display: inline-block;
+            margin-top: 18px;
+            color: #087f8c;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .error-box {
+            margin: 30px 0;
+            background: #fff0f0;
+            color: #a32222;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        @media(max-width: 700px) {
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .main-image, .no-image {
+                height: 280px;
+            }
+
+            .content {
+                padding: 22px;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .package-section {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">🌍 Smart Travel</div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/destinations">Destinations</a>
+            <a href="/plan-trip">Plan Trip</a>
+            <a href="/my-packages">My Packages</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="/plan-trip" class="back-btn">← Back to Trip</a>
+
+        {% if error %}
+
+            <div class="error-box">
+                {{ error }}
+            </div>
+
+        {% elif place %}
+
+            <div class="details-card">
+
+                {% if place.image %}
+                    <img
+                        src="{{ place.image }}"
+                        class="main-image"
+                        alt="{{ place.name }}"
+                    >
+                {% else %}
+                    <div class="no-image">📍</div>
+                {% endif %}
+
+                <div class="content">
+
+                    <div class="category">✨ Recommended Place</div>
+
+                    <h1>{{ place.name }}</h1>
+
+                    <div class="description">
+                        📍 {{ place.address or "Address not available" }}
+                    </div>
+
+                    <div class="info-grid">
+
+                        <div class="info-box">
+                            <span>📍 Address</span>
+                            <strong>{{ place.address or "Not available" }}</strong>
+                        </div>
+
+                        <div class="info-box">
+                            <span>🏙️ City</span>
+                            <strong>{{ place.city or "Not available" }}</strong>
+                        </div>
+
+                        <div class="info-box">
+                            <span>🌍 Country</span>
+                            <strong>{{ place.country or "Not available" }}</strong>
+                        </div>
+
+                        <div class="info-box">
+                            <span>🗺️ Place Type</span>
+                            <strong>{{ place.category or "Tourist Place" }}</strong>
+                        </div>
+
+                    </div>
+
+                    {% if place.latitude is not none and place.longitude is not none %}
+
+                        <div class="coordinates">
+                            🧭 Coordinates:
+                            <strong>
+                                {{ place.latitude }}, {{ place.longitude }}
+                            </strong>
+                        </div>
+
+                        <a
+                            href="https://www.google.com/maps?q={{ place.latitude }},{{ place.longitude }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="map-btn"
+                        >
+                            🗺️ Open in Google Maps
+                        </a>
+
+                    {% endif %}
+
+                    {% if place.image_source %}
+                        <br>
+                        <a
+                            href="{{ place.image_source }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="image-source"
+                        >
+                            📷 View Image Source
+                        </a>
+                    {% endif %}
+
+                    <!-- ADD TO MY PACKAGES -->
+
+                    <section class="package-section">
+
+                        <h2>💖 Add to My Packages</h2>
+
+                        <p>
+                            Place details check pannunga. Pudichirundha,
+                            existing package select pannunga or new package
+                            create pannunga.
+                        </p>
+
+                        <form action="/add-to-package" method="POST">
+
+                            <input
+                                type="hidden"
+                                name="place_id"
+                                value="{{ place.place_id or '' }}"
+                            >
+
+                            <input
+                                type="hidden"
+                                name="place_name"
+                                value="{{ place.name }}"
+                            >
+
+                            <input
+                                type="hidden"
+                                name="address"
+                                value="{{ place.address or '' }}"
+                            >
+
+                            <input
+                                type="hidden"
+                                name="image"
+                                value="{{ place.image or '' }}"
+                            >
+
+                            <input
+                                type="hidden"
+                                name="category"
+                                value="{{ place.category or '' }}"
+                            >
+
+                            <input
+                                type="hidden"
+                                name="latitude"
+                                value="{{ place.latitude if place.latitude is not none else '' }}"
+                            >
+
+                            <input
+                                type="hidden"
+                                name="longitude"
+                                value="{{ place.longitude if place.longitude is not none else '' }}"
+                            >
+
+                            <input
+                                type="hidden"
+                                name="destination"
+                                value="{{ place.destination or place.city or place.country }}"
+                            >
+
+                            <label for="package_id">
+                                Select Existing Package
+                            </label>
+
+                            <select name="package_id" id="package_id">
+                                <option value="">Create a new package</option>
+
+                                {% for package in packages %}
+                                    <option value="{{ package.id }}">
+                                        {{ package.package_name }}
+                                        — {{ package.destination }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+
+                            <label for="new_destination">
+                                New Package Destination (optional)
+                            </label>
+
+                            <input
+                                type="text"
+                                id="new_destination"
+                                name="new_destination"
+                                placeholder="Example: Goa, Thailand"
+                            >
+
+                            <label for="new_package_name">
+                                New Package Name (optional)
+                            </label>
+
+                            <input
+                                type="text"
+                                id="new_package_name"
+                                name="new_package_name"
+                                placeholder="Example: Goa Beach Trip"
+                            >
+
+                            <button type="submit" class="add-btn">
+                                ❤️ Add to My Packages
+                            </button>
+
+                        </form>
+
+                        <a href="/my-packages" class="packages-link">
+                            📦 View My Packages →
+                        </a>
+
+                    </section>
+
+                </div>
+            </div>
+
+        {% endif %}
+    </div>
+
+    <script>
+        const packageSelect = document.getElementById("package_id");
+        const destinationInput = document.getElementById("new_destination");
+        const packageNameInput = document.getElementById("new_package_name");
+
+        if (packageSelect) {
+            packageSelect.addEventListener("change", function () {
+                const usingExistingPackage = this.value !== "";
+
+                destinationInput.disabled = usingExistingPackage;
+                packageNameInput.disabled = usingExistingPackage;
+
+                if (usingExistingPackage) {
+                    destinationInput.value = "";
+                    packageNameInput.value = "";
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
